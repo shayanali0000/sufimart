@@ -7,6 +7,24 @@
   <title>SUFI | MART</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        animation: {
+          fade: "fadeIn 0.4s ease-out"
+        },
+        keyframes: {
+          fadeIn: {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 }
+          }
+        }
+      }
+    }
+  }
+</script>
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -60,24 +78,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Modal -->
-  <div id="modal" class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg overflow-hidden relative max-w-sm w-full shadow-lg">
-      <img id="modalImg" src="" class="w-full h-96 object-cover">
-      <div id="thumbnailContainer" class="flex justify-center gap-2 p-2 bg-white"></div>
-      <div class="p-4">
-        <div id="modalPrice" class="text-[#5a3a22] font-semibold text-lg mb-1">PKR</div>
-        <div id="modalDescription" class="text-sm text-gray-600 mb-3">Azaadi Special - 35% Off - Delivery charges may apply</div>
-        <div class="flex justify-between items-center">
-          <a href="https://wa.me/923182155044" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Order Now</a>
-          <button onclick="addToCart()" class="bg-[#5a3a22] text-white px-4 py-2 rounded hover:bg-[#7a5433]">Add to Cart</button>
-        </div>
-      </div>
-      <button onclick="closeModal()" class="absolute top-2 right-2 text-white bg-gray-700 rounded-full w-8 h-8">×</button>
-    </div>
-  </div>
-
 
 
 
@@ -256,7 +256,99 @@ function openModal(images, price, card) {
   window.scrollTo(0, 0);
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   </script>
+
+
+
+<!-- ✅ Changes made:
+1. Added fade-in animation to the modal.
+2. Modified WhatsApp button to dynamically send article name + price. -->
+
+<!-- Add Tailwind CSS animation utility if not already enabled -->
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        animation: {
+          fade: "fadeIn 0.4s ease-out"
+        },
+        keyframes: {
+          fadeIn: {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 }
+          }
+        }
+      }
+    }
+  }
+</script>
+
+
+
+<!-- MODIFIED MODAL (Add `animate-fade` to fade in) -->
+<div id="modal" class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center hidden animate-fade">
+  <div class="bg-white rounded-lg overflow-hidden relative max-w-sm w-full shadow-lg animate-fade">
+    <img id="modalImg" src="" class="w-full h-96 object-cover">
+    <div id="thumbnailContainer" class="flex justify-center gap-2 p-2 bg-white"></div>
+    <div class="p-4">
+      <div id="modalPrice" class="text-[#5a3a22] font-semibold text-lg mb-1">PKR</div>
+      <div id="modalDescription" class="text-sm text-gray-600 mb-3">Azaadi Special - 35% Off - Delivery charges may apply</div>
+      <div class="flex justify-between items-center">
+        <!-- Updated WhatsApp Link -->
+        <a id="whatsappBtn" href="#" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Order Now</a>
+        <button onclick="addToCart()" class="bg-[#5a3a22] text-white px-4 py-2 rounded hover:bg-[#7a5433]">Add to Cart</button>
+      </div>
+    </div>
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white bg-gray-700 rounded-full w-8 h-8">×</button>
+  </div>
+</div>
+
+<!-- ✅ Updated JavaScript for modal and WhatsApp integration -->
+<script>
+  function openModal(images, price, card) {
+    const modalImg = document.getElementById('modalImg');
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+
+    const name = price.split(' - ')[0];
+    const priceText = price.split(' - ')[1];
+
+    modalImg.src = images[0];
+    thumbnailContainer.innerHTML = '';
+
+    images.forEach(imgSrc => {
+      const thumb = document.createElement('img');
+      thumb.src = imgSrc;
+      thumb.className = 'w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-[#5a3a22]';
+      thumb.onclick = () => {
+        modalImg.src = imgSrc;
+      };
+      thumbnailContainer.appendChild(thumb);
+    });
+
+    document.getElementById('modalPrice').innerText = price;
+
+    // WhatsApp link with dynamic message
+    const message = encodeURIComponent(`Hi, I'm interested in buying ${name} for ${priceText}`);
+    whatsappBtn.href = `https://wa.me/923182155044?text=${message}`;
+
+    document.getElementById('modal').classList.remove('hidden');
+    selectedCard = card;
+  }
+</script>
 
 </body>
 </html>
