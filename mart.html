@@ -65,9 +65,10 @@
   <div id="modal" class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg overflow-hidden relative max-w-sm w-full shadow-lg">
       <img id="modalImg" src="" class="w-full h-96 object-cover">
+      <div id="thumbnailContainer" class="flex justify-center gap-2 p-2 bg-white"></div>
       <div class="p-4">
         <div id="modalPrice" class="text-[#5a3a22] font-semibold text-lg mb-1">PKR</div>
-        <div id="modalDescription" class="text-sm text-gray-600 mb-3">Soft fleece inner lining, smooth exterior, and stitched to perfection. Perfect for winter wear with a modern cut.</div>
+        <div id="modalDescription" class="text-sm text-gray-600 mb-3">Azaadi Special - 35% Off - Delivery charges may apply</div>
         <div class="flex justify-between items-center">
           <a href="https://wa.me/923182155044" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Order Now</a>
           <button onclick="addToCart()" class="bg-[#5a3a22] text-white px-4 py-2 rounded hover:bg-[#7a5433]">Add to Cart</button>
@@ -76,6 +77,17 @@
       <button onclick="closeModal()" class="absolute top-2 right-2 text-white bg-gray-700 rounded-full w-8 h-8">×</button>
     </div>
   </div>
+
+
+
+
+  <!-- Advertisement Popup -->
+<div id="adPopup" class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
+  <div class="relative max-w-xs sm:max-w-md w-full mx-auto">
+    <button onclick="closeAdPopup()" class="absolute top-2 right-2 z-10 bg-white text-black font-bold rounded-full w-8 h-8 shadow-lg">×</button>
+    <img src="martimage/advertisement.jpeg" alt="Azadi Sale" class="w-full h-auto rounded-lg shadow-lg">
+  </div>
+</div>
 
 
 
@@ -89,40 +101,76 @@
     </div>
   </footer>
 
+
+  <!-- Right Side Floating Image -->
+<div id="sideImage" class="fixed top-1/3 right-4 z-40 hidden opacity-0 transition-opacity duration-1000">
+  <div class="relative">
+    <button onclick="closeSideImage()" class="absolute -top-3 -right-3 bg-white text-black font-bold rounded-full w-6 h-6 shadow-lg text-sm">×</button>
+    <img src="martimage/articles.png" alt="Promo" class="w-48 rounded-lg shadow-lg">
+  </div>
+</div>
+
   <script>
     const hoodies = [...document.querySelectorAll('.grid')][0];
     let selectedCard = null;
 
-    const hoodieData = [
-      { img: 'images/hoodie1.jpeg', price: 'PKR 2,999', name: 'Classic Mist' },
-      { img: 'images/hoodie2.jpeg', price: 'PKR 3,199', name: 'Winter Ash' },
-      { img: 'images/hoodie3.jpeg', price: 'PKR 2,849', name: 'Snow Drift' },
-      { img: 'images/hoodie4.jpeg', price: 'PKR 3,499', name: 'Coffee Haze' },
-      { img: 'images/hoodie5.jpeg', price: 'PKR 2,750', name: 'Moon Frost' },
-      { img: 'images/hoodie6.jpeg', price: 'PKR 3,100', name: 'Smoky Brown' },
-      { img: 'images/hoodie7.jpeg', price: 'PKR 3,250', name: 'Wool Crest' },
-      { img: 'images/hoodie8.jpeg', price: 'PKR 2,980', name: 'Oak Chill' },
-      { img: 'images/hoodie9.jpeg', price: 'PKR 2,800', name: 'Almond Cream' },
-      { img: 'images/hoodie10.jpeg', price: 'PKR 3,050', name: 'Dune Shade' },
-      { img: 'images/hoodie11.jpeg', price: 'PKR 3,000', name: 'Dust Cloud' },
-      { img: 'images/hoodie12.jpeg', price: 'PKR 2,950', name: 'Urban Rust' },
-      { img: 'images/hoodie13.jpeg', price: 'PKR 2,899', name: 'Frost Oak' },
-      { img: 'images/hoodie14.jpeg', price: 'PKR 3,199', name: 'Earth Drift' },
-      { img: 'images/hoodie15.jpeg', price: 'PKR 3,050', name: 'Stone Cream' },
-      { img: 'images/hoodie16.jpeg', price: 'PKR 2,999', name: 'Sahara Blend' },
-      { img: 'images/hoodie17.jpeg', price: 'PKR 3,200', name: 'Silk Amber' },
-      { img: 'images/hoodie18.jpeg', price: 'PKR 2,850', name: 'Maple Fade' },
-      { img: 'images/hoodie19.jpeg', price: 'PKR 3,000', name: 'Wood Smoke' },
-      { img: 'images/hoodie20.jpeg', price: 'PKR 2,970', name: 'Dusty Fern' },
-      { img: 'images/hoodie21.jpeg', price: 'PKR 2,980', name: 'Fog Trail' },
-      { img: 'images/hoodie22.jpeg', price: 'PKR 3,220', name: 'Vintage Oak' }
-    ];
+const hoodieData = [
+  {
+    images: ['martimage/brownsandil1.jpeg', 'martimage/brownsandil2.jpeg', 'martimage/brownsandil3.jpeg'],
+    price: 'PKR 3,185',
+    name: 'Mens Cloud Sandals'
+  },
+  {
+    images: ['martimage/blacksandal1.jpeg', 'martimage/blacksandal2.jpeg' , 'martimage/blacksandal3.jpeg'],
+    price: 'PKR 3,499',
+    name: 'Active Stride Sandals'
+  },
+
+    {
+    images: ['martimage/kitto.jpeg', 'martimage/kitto2.jpeg' , 'martimage/kitto3.jpeg'],
+    price: 'PKR 2,600',
+    name: 'Swift Trail Sandals'
+  },
+      {
+    images: ['martimage/brown1.jpeg', 'martimage/brown2.jpeg' , 'martimage/brown3.jpeg'],
+    price: 'PKR 3,000',
+    name: 'Cloud Step Slides'
+  },
+        {
+    images: ['martimage/Green1.jpeg', 'martimage/Green2.jpeg' , 'martimage/Green3.jpeg'],
+    price: 'PKR 3,250',
+    name: 'Flex-It Sandals'
+  },
+          {
+    images: ['martimage/black1.jpeg', 'martimage/black2.jpeg' , 'martimage/black3.jpeg'],
+    price: 'PKR 2,600',
+    name: 'Cloud Step Sandals'
+  },
+            {
+    images: ['martimage/blackish1.jpeg', 'martimage/blackish2.jpeg' , 'martimage/blackish3.jpeg'],
+    price: 'PKR 2,600',
+    name: 'Active Black'
+  },
+              {
+    images: ['martimage/blue1.jpeg', 'martimage/blue2.jpeg' , 'martimage/blue3.jpeg'],
+    price: 'PKR 2,600',
+    name: 'Blue Active Sandals'
+  },
+                {
+    images: ['martimage/brownish1.jpeg', 'martimage/brownish2.jpeg' , 'martimage/brownish3.jpeg'],
+    price: 'PKR 2,700',
+    name: 'Brown Active Sandals'
+  },
+                 
+  // Continue for the rest...
+];
+
 
     hoodieData.forEach(h => {
       const card = document.createElement('div');
       card.className = 'w-full rounded-lg shadow hover:shadow-lg transition overflow-hidden bg-white cursor-pointer';
       card.innerHTML = `
-        <img src="${h.img}" alt="${h.name}" class="w-full h-64 object-cover">
+        <img src="${h.images[0]}" alt="${h.name}" class="w-full h-64 object-cover">
         <div class="p-4 text-center font-semibold text-[#5a3a22]">
           <div class="flex justify-between text-sm">
             <span>${h.name}</span>
@@ -130,16 +178,58 @@
           </div>
         </div>
       `;
-      card.onclick = () => openModal(h.img, `${h.name} - ${h.price}`, card);
+      card.onclick = () => openModal(h.images, `${h.name} - ${h.price}`, card);
+
       hoodies.appendChild(card);
     });
 
-    function openModal(img, price, card) {
-      document.getElementById('modalImg').src = img;
-      document.getElementById('modalPrice').innerText = price;
-      document.getElementById('modal').classList.remove('hidden');
-      selectedCard = card;
-    }
+
+
+
+    // Show floating image after 5 seconds
+setTimeout(() => {
+  const sideImage = document.getElementById('sideImage');
+  sideImage.classList.remove('hidden');
+  setTimeout(() => {
+    sideImage.classList.add('opacity-100');
+  }, 100); // allow transition
+}, 5000);
+
+// Close floating image
+function closeSideImage() {
+  const sideImage = document.getElementById('sideImage');
+  sideImage.classList.add('opacity-0');
+  setTimeout(() => {
+    sideImage.classList.add('hidden');
+  }, 500);
+}
+
+
+
+function openModal(images, price, card) {
+  const modalImg = document.getElementById('modalImg');
+  const thumbnailContainer = document.getElementById('thumbnailContainer');
+
+  modalImg.src = images[0];
+  thumbnailContainer.innerHTML = '';
+
+  images.forEach(imgSrc => {
+    const thumb = document.createElement('img');
+    thumb.src = imgSrc;
+    thumb.className = 'w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-[#5a3a22]';
+    thumb.onclick = () => {
+      modalImg.src = imgSrc;
+    };
+    thumbnailContainer.appendChild(thumb);
+  });
+
+  document.getElementById('modalPrice').innerText = price;
+  document.getElementById('modal').classList.remove('hidden');
+  selectedCard = card;
+}
+
+
+
 
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
@@ -151,6 +241,21 @@
       }
       closeModal();
     }
+
+  // Show popup on page load
+  window.addEventListener('load', () => {
+    document.getElementById('adPopup').classList.remove('hidden');
+  });
+
+  // Close popup
+  function closeAdPopup() {
+    document.getElementById('adPopup').classList.add('hidden');
+  }
+
+  window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
   </script>
 
 </body>
